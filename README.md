@@ -5,6 +5,7 @@
 
 ![](https://docs.vapor.codes/4.0/images/xcode-scheme-options.png)
 
+如果是 xcode 运行，需要设置为当前项目根目录
 
 ## 路由
 
@@ -80,11 +81,10 @@ createdb blog -O vapor -E UTF8 -e
 
 ## 认证
 
-
-
-
-
-
+1. 用户+密码换取 access_token 和 refresh_token 
+2. 通过 access_token 校验，判断是否登录
+3. 如果 access_token 过期，通过 refresh_token 重新生成 access_token
+4. 如果 access_token 过期，那么需要用户重新登录
 
 ## 部署
 
