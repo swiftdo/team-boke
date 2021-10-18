@@ -45,7 +45,6 @@ final class UserAuth: Model {
     }
 }
 
-
 extension UserAuth {
     struct FieldKeys {
         static var userId: FieldKey { "user_id" }

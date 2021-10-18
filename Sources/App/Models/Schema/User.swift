@@ -37,6 +37,9 @@ final class User: Model {
     @Children(for: \.$user)
     var userAuths: [UserAuth] // 1对多
     
+    @OptionalParent(key: FieldKeys.roleId)
+    var role: Role?
+    
 
     init() { }
 
@@ -60,3 +63,5 @@ extension User {
         static var roleId: FieldKey { "role_id" }
     }
 }
+
+extension User: Authenticatable {}
