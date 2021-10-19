@@ -78,6 +78,10 @@ createuser vapor -P
 createdb blog -O vapor -E UTF8 -e
 ```
 
+### 注意
+1. 更改数据库后，需要写迁移代码，完成后记得执行 `vapor run migrate`
+2. 模型间有依赖关系，注意迁移类的调用顺序
+
 
 ## 认证
 
