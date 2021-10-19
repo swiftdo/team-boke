@@ -5,6 +5,8 @@ import Fluent
 import FluentPostgresDriver
 
 public func configure(_ app: Application) throws {
+    
+    // 中间件配置
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     
     let corsConfiguration = CORSMiddleware.Configuration(
@@ -27,14 +29,16 @@ public func configure(_ app: Application) throws {
                                                   viewDirectory: detected,
                                                   defaultExtension: "html"))
     app.views.use(.leaf)
-    // app.leaf.cache.isEnabled = app.environment.isRelease
     
 
+    // 数据库配置
     app.databases.use(.postgres(hostname: "localhost",
                                 username: "vapor",
                                 password: "vapor",
                                 database: "blog"),
                       as: .psql)
+    
+    
     try routes(app)
     try migrations(app)
     try services(app)
