@@ -9,4 +9,12 @@ func routes(_ app: Application) throws {
     app.get("hello") { req  in
         return req.view.render("hello", ["name": "Leaf"])
     }
+
+    app.get("login") { req in 
+        return req.view.render("login", ["name": "Login"])
+    }
+
+    app.get("register") { req in 
+        return req.view.render("register", ["name": "Register"])
+    }
 }
