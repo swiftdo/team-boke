@@ -1,0 +1,40 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: Menlo, Roboto;
+    font-size: 16px;
+    line-height: 1.5em;
+    background: #F2F2F2;
+    width: 100%;
+}
+
+hr {
+    margin: 15px 0px;
+    border: none;
+    border-width: 0.5px;
+    border-style: solid;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
