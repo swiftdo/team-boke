@@ -17,4 +17,9 @@ func routes(_ app: Application) throws {
     app.get("register") { req in 
         return req.view.render("register", ["name": "Register"])
     }
+    
+    
+    try app.group("api") { api in
+        try api.register(collection: AuthController())
+    }
 }
