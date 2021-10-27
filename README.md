@@ -276,7 +276,9 @@ $ heroku run Run -- revert --all --yes --env production
 
 ```sh
 $ heroku run Run -- migrate --env production
-$ heroku run Run -- migrate --env production -a teamboke
+
+# 或者指定 app
+$ heroku run Run  --app=teamboke  --env production -- migrate
 ```
 
 ## 其他
