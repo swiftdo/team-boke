@@ -20,11 +20,11 @@
     - [Scale Up](#scale-up)
     - [持续部署](#持续部署)
   - [在 heroku 控制台进行部署](#在-heroku-控制台进行部署)
-    - [hero 中 Postgres 配置](#hero-中-postgres-配置)
-        - [添加 PostgreSQL 数据库](#添加-postgresql-数据库)
-        - [配置数据库](#配置数据库)
-        - [还原数据库](#还原数据库)
-  - [其他](#其他)
+  - [heroku 中 Postgres 的配置](#heroku-中-postgres-的配置)
+    - [添加 PostgreSQL 数据库](#添加-postgresql-数据库)
+    - [配置数据库](#配置数据库)
+    - [还原数据库](#还原数据库)
+- [其他](#其他)
 
 <!-- /TOC -->
 
@@ -237,9 +237,9 @@ heroku ps:scale web=1
 ![](http://mmbiz.qpic.cn/mmbiz_png/3wD9LKPpvOUoeQH5iajQhnoq1jiaYMYBkeeAurXxrLqmb7Ys63gc7bt6ZMR2013wFJtrevB37icx8tst40YpUDLicg/0?wx_fmt=png)
 
 
-### hero 中 Postgres 配置
+## heroku 中 Postgres 的配置
 
-##### 添加 PostgreSQL 数据库
+### 添加 PostgreSQL 数据库
 
 在 [dashboard.heroku.com](https://dashboard.heroku.com) 访问您的应用程序，然后转到 `Add-ons` 部分。
 
@@ -249,7 +249,7 @@ heroku ps:scale web=1
 
 完成后，您将看到数据库显示在 `Resources` 选项卡下。
 
-##### 配置数据库
+### 配置数据库
 
 现在，我们必须告诉我们的应用程序如何访问数据库。在项目的根目录中，运行以下命令：
 
@@ -287,7 +287,7 @@ git add .
 git commit -m "configured heroku database"
 ```
 
-##### 还原数据库
+### 还原数据库
 
 你可以使用 heroku 的 run 命令执行 `revert` 或者其他命令。默认情况下执行的是 `Run`。
 
@@ -301,9 +301,12 @@ $ heroku run Run -- revert --all --yes --env production
 
 ```sh
 $ heroku run Run -- migrate --env production
+
+# 或者指定 app
+heroku run Run  --app=teamboke  --env production -- migrate
 ```
 
-## 其他
+# 其他
 
 杀死指定端口的进程
 
