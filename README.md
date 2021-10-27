@@ -2,33 +2,40 @@
 
 <!-- TOC -->
 
-- [Vapor实战项目](#vapor实战项目)
-- [路由](#路由)
-- [数据库](#数据库)
-- [认证](#认证)
-- [Heroku 部署](#heroku-部署)
-  - [注册 Heroku 账户](#注册-heroku-账户)
-  - [通过 cli 方式进行 heroku 部署](#通过-cli-方式进行-heroku-部署)
-    - [安装 cli](#安装-cli)
-    - [登录](#登录)
-    - [创建一个应用程序](#创建一个应用程序)
-    - [与 Heroku 连接](#与-heroku-连接)
-    - [设置 Buildpack](#设置-buildpack)
-    - [Swift 版本文件](#swift-版本文件)
-    - [Procfile](#procfile)
-    - [部署到 Heroku](#部署到-heroku)
-    - [Scale Up](#scale-up)
-    - [持续部署](#持续部署)
-  - [在 heroku 控制台进行部署](#在-heroku-控制台进行部署)
-  - [heroku 中 Postgres 的配置](#heroku-中-postgres-的配置)
-    - [添加 PostgreSQL 数据库](#添加-postgresql-数据库)
-    - [配置数据库](#配置数据库)
-    - [还原数据库](#还原数据库)
-- [其他](#其他)
+- [Vapor实战项目](#vapor%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE)
+- [参考](#%E5%8F%82%E8%80%83)
+- [自定义工作目录](#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95)
+- [路由](#%E8%B7%AF%E7%94%B1)
+- [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
+- [认证](#%E8%AE%A4%E8%AF%81)
+- [Heroku 部署](#heroku-%E9%83%A8%E7%BD%B2)
+    - [注册 Heroku 账户](#%E6%B3%A8%E5%86%8C-heroku-%E8%B4%A6%E6%88%B7)
+    - [通过 cli 方式进行 heroku 部署](#%E9%80%9A%E8%BF%87-cli-%E6%96%B9%E5%BC%8F%E8%BF%9B%E8%A1%8C-heroku-%E9%83%A8%E7%BD%B2)
+        - [安装 cli](#%E5%AE%89%E8%A3%85-cli)
+        - [登录](#%E7%99%BB%E5%BD%95)
+        - [创建一个应用程序](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F)
+        - [与 Heroku 连接](#%E4%B8%8E-heroku-%E8%BF%9E%E6%8E%A5)
+        - [设置 Buildpack](#%E8%AE%BE%E7%BD%AE-buildpack)
+        - [Swift 版本文件](#swift-%E7%89%88%E6%9C%AC%E6%96%87%E4%BB%B6)
+        - [Procfile](#procfile)
+        - [部署到 Heroku](#%E9%83%A8%E7%BD%B2%E5%88%B0-heroku)
+        - [Scale Up](#scale-up)
+        - [持续部署](#%E6%8C%81%E7%BB%AD%E9%83%A8%E7%BD%B2)
+    - [在 heroku 控制台进行部署](#%E5%9C%A8-heroku-%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BF%9B%E8%A1%8C%E9%83%A8%E7%BD%B2)
+    - [heroku 中 Postgres 的配置](#heroku-%E4%B8%AD-postgres-%E7%9A%84%E9%85%8D%E7%BD%AE)
+        - [添加 PostgreSQL 数据库](#%E6%B7%BB%E5%8A%A0-postgresql-%E6%95%B0%E6%8D%AE%E5%BA%93)
+        - [配置数据库](#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93)
+        - [还原数据库](#%E8%BF%98%E5%8E%9F%E6%95%B0%E6%8D%AE%E5%BA%93)
+- [其他](#%E5%85%B6%E4%BB%96)
 
 <!-- /TOC -->
 
-自定义工作目录
+# 项目模仿参考
+
+* 后台模板参考：[https://github.com/tailwindadmin/admin](https://github.com/tailwindadmin/admin)
+* 前端站点参考：[https://sharecuts.cn/shortcut/5681](https://sharecuts.cn/shortcut/5681)
+
+# 自定义工作目录
 
 ![](https://docs.vapor.codes/4.0/images/xcode-scheme-options.png)
 
