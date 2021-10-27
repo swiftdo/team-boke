@@ -1,5 +1,33 @@
 # Vapor实战项目
 
+<!-- TOC -->
+
+- [Vapor实战项目](#vapor实战项目)
+- [路由](#路由)
+- [数据库](#数据库)
+- [认证](#认证)
+- [Heroku 部署](#heroku-部署)
+  - [注册 Heroku 账户](#注册-heroku-账户)
+  - [通过 cli 方式进行 heroku 部署](#通过-cli-方式进行-heroku-部署)
+    - [安装 cli](#安装-cli)
+    - [登录](#登录)
+    - [创建一个应用程序](#创建一个应用程序)
+    - [与 Heroku 连接](#与-heroku-连接)
+    - [设置 Buildpack](#设置-buildpack)
+    - [Swift 版本文件](#swift-版本文件)
+    - [Procfile](#procfile)
+    - [部署到 Heroku](#部署到-heroku)
+    - [Scale Up](#scale-up)
+    - [持续部署](#持续部署)
+  - [在 heroku 控制台进行部署](#在-heroku-控制台进行部署)
+    - [hero 中 Postgres 配置](#hero-中-postgres-配置)
+        - [添加 PostgreSQL 数据库](#添加-postgresql-数据库)
+        - [配置数据库](#配置数据库)
+        - [还原数据库](#还原数据库)
+  - [其他](#其他)
+
+<!-- /TOC -->
+
 自定义工作目录
 
 ![](https://docs.vapor.codes/4.0/images/xcode-scheme-options.png)
@@ -225,11 +253,8 @@ heroku ps:scale web=1
 
 现在，我们必须告诉我们的应用程序如何访问数据库。在项目的根目录中，运行以下命令：
 
-```shell
+```sh
 $ heroku config
-
-# 或者指定某个应用
-$ heroku config -a teamboke 
 ```
 
 这将会有如下输出：
@@ -276,9 +301,6 @@ $ heroku run Run -- revert --all --yes --env production
 
 ```sh
 $ heroku run Run -- migrate --env production
-
-# 或者指定 app
-$ heroku run Run  --app=teamboke  --env production -- migrate
 ```
 
 ## 其他
