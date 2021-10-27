@@ -1,4 +1,4 @@
-# 博客项目
+# Vapor实战项目
 
 自定义工作目录
 
@@ -6,11 +6,9 @@
 
 如果是 xcode 运行，需要设置为当前项目根目录
 
-## 路由
+# 路由
 
-## 数据库
-
-### macos
+# 数据库
 
 1; 安装
 
@@ -73,27 +71,29 @@ createuser vapor -P
 createdb blog -O vapor -E UTF8 -e
 ```
 
-### 注意
+**注意**
 
 1. 更改数据库后，需要写迁移代码，完成后记得执行 `vapor run migrate`
 2. 模型间有依赖关系，注意迁移类的调用顺序
 
-## 认证
+# 认证
 
 1. 用户+密码换取 access_token 和 refresh_token
 2. 通过 access_token 校验，判断是否登录
 3. 如果 access_token 过期，通过 refresh_token 重新生成 access_token
 4. 如果 access_token 过期，那么需要用户重新登录
 
-## Heroku 部署
+# Heroku 部署
 
 [Heroku](https://www.heroku.com/) 平台的灵活性极高且支持多种编程语言。若想把程序部署到 Heroku 上，开发者可以直接使用 Git 把程序推送到 Heroku 的 Git 服务器上。在服务器上, git push 命令会自动触发安装、配置和部署程序。
 
-### 注册 Heroku 账户
+## 注册 Heroku 账户
 
 您将需要一个 heroku 帐户，如果您没有，请在此处注册：[https://signup.heroku.com/](https://signup.heroku.com/)
 
-### 安装 CLI
+## 通过 cli 方式进行 heroku 部署
+
+### 安装 cli
 
 确保已安装 heroku cli 工具。
 
@@ -124,66 +124,15 @@ $ heroku auth:whoami
 
 访问 [dashboard.heroku.com](https://dashboard.heroku.com)，登录您的帐户，并从右上角的下拉列表中创建一个新应用程序。按照 Heroku 提供的提示进行操作即可。
 
-### Git
+### 与 Heroku 连接
 
-Heroku 使用 Git 部署您的应用程序，因此您需要将项目放入 Git 存储库（如果尚未安装）。
-
-#### 初始化 Git
-
-如果需要将 Git 添加到项目中，请在终端中输入以下命令：
-
-```sh
-$ git init
-```
-
-#### main 分支
-
-默认情况下，Heroku 部署 main 分支。在推送之前，请确保所有更改都已签入该分支。
-
-检查您当前的分支：
-
-```sh
-$ git branch
-```
-
-星号表示当前分支：
-
-```sh
-* main
-  commander
-  other-branches
-```
-
-如果您当前不在 `main` 分支上，请输入以下命令切换到 `main` 分支：
-
-```sh
-$ git checkout main
-```
-
-#### 提交变更
-
-如果此命令产生输出，则您有未提交更改：
-
-```sh
-$ git status --porcelain
-```
-
-使用以下命名进行提交：
-
-```sh
-$ git add .
-$ git commit -m "我代码修改的描述"
-```
-
-#### 与 Heroku 连接
-
-将您的应用程序与 heroku 连接（替换为您的应用程序名称）
+将您的应用程序与 heroku 连接（your-apps-name-here 替换为您的应用程序名称）
 
 ```sh
 $ heroku git:remote -a your-apps-name-here
 ```
 
-#### 设置 Buildpack
+### 设置 Buildpack
 
 设置 buildpack 告诉 heroku 如何处理这个 vapor 项目。
 
@@ -191,7 +140,7 @@ $ heroku git:remote -a your-apps-name-here
 $ heroku buildpacks:set vapor/vapor
 ```
 
-#### Swift 版本文件
+### Swift 版本文件
 
 buildpack 会寻找一个.swift-version 文件，获知使用的 swift 版本。 （可根据自己的项目来替换下面的 5.2.1）
 
@@ -201,7 +150,7 @@ echo "5.2.1" > .swift-version
 
 这将创建 `.swift-version` 文件，内容为 5.2.1。
 
-#### Procfile
+### Procfile
 
 Heroku 使用 Procfile 知道如何运行您的应用程序，我们可以使用下面：
 
@@ -216,18 +165,7 @@ echo "web: Run serve --env production" \
   "--hostname 0.0.0.0 --port \$PORT" > Procfile
 ```
 
-#### 提交变更
-
-我们只是添加了这些文件，但尚未提交。如果我们推送，heroku 将找不到它们。
-
-提交，使用下面命令：
-
-```sh
-$ git add .
-$ git commit -m "adding heroku build files"
-```
-
-#### 部署到 Heroku
+### 部署到 Heroku
 
 您已经准备好部署，可以在终端上运行它。构建可能需要一段时间。
 
@@ -235,7 +173,7 @@ $ git commit -m "adding heroku build files"
 $ git push heroku main
 ```
 
-#### Scale Up
+### Scale Up
 
 成功构建之后，您需要添加至少一台服务器，一台网络是免费的，您可以通过以下方式获得它：
 
@@ -243,14 +181,35 @@ $ git push heroku main
 heroku ps:scale web=1
 ```
 
-#### 持续部署
+### 持续部署
 
 每当您想更新时，只需将最新的更改放入 main 并推送到 heroku，它将重新部署。
 
-除了以上的方式，其实直接在heroku控制台操作即可：
+
+## 在 heroku 控制台进行部署
+
+除了以上的方式，其实直接在 heroku 控制台操作即可，相对来说会简单好多：
+
+项目同样需要配置 `Swift 版本文件` 和 `Procfile`, 这两部跟 cli 操作一样，然后将修改提交到 github 上。
+
+在 heroku 创建应用后，可在做如下图的配置：
+
+
 ![](http://mmbiz.qpic.cn/mmbiz_png/3wD9LKPpvOUoeQH5iajQhnoq1jiaYMYBkeCVWbuu3EL7KUgxeLbaupCsOiaL0BnEEiaiaoVQzSQomyUFE8YEoOLibibmw/0?wx_fmt=png)
 
-#### Postgres
+我们配置了与 github 仓库的关联，且配置了，在 main 分支的有提交的时候，自动进行部署，无需人工操作。
+
+然后还需配置 `buildpacks`:
+
+
+![](http://mmbiz.qpic.cn/mmbiz_png/3wD9LKPpvOUoeQH5iajQhnoq1jiaYMYBkeLOGpLRntvjKjakSRQicwLy8PUp54mgicPTFcDtR5mI1u4TVUmt3UNGpw/0?wx_fmt=png)
+
+点击添加 `add buildpack`, 将url(https://github.com/vapor-community/heroku-buildpack)填入即可：
+
+![](http://mmbiz.qpic.cn/mmbiz_png/3wD9LKPpvOUoeQH5iajQhnoq1jiaYMYBkeeAurXxrLqmb7Ys63gc7bt6ZMR2013wFJtrevB37icx8tst40YpUDLicg/0?wx_fmt=png)
+
+
+### hero 中 Postgres 配置
 
 ##### 添加 PostgreSQL 数据库
 
