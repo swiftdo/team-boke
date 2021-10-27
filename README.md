@@ -1,4 +1,3 @@
-
 # 博客项目
 
 自定义工作目录
@@ -9,13 +8,11 @@
 
 ## 路由
 
-
 ## 数据库
 
 ### macos
 
 1; 安装
-
 
 ```sh
 $ brew install postgresql
@@ -69,9 +66,7 @@ dropdb -h localhost -p 5432 -U username dbname
 
 `dbname`要删除的数据库名
 
-
 本项目中运行的方式是：
-
 
 ```sh
 createuser vapor -P
@@ -79,17 +74,16 @@ createdb blog -O vapor -E UTF8 -e
 ```
 
 ### 注意
+
 1. 更改数据库后，需要写迁移代码，完成后记得执行 `vapor run migrate`
 2. 模型间有依赖关系，注意迁移类的调用顺序
 
-
 ## 认证
 
-1. 用户+密码换取 access_token 和 refresh_token 
+1. 用户+密码换取 access_token 和 refresh_token
 2. 通过 access_token 校验，判断是否登录
 3. 如果 access_token 过期，通过 refresh_token 重新生成 access_token
 4. 如果 access_token 过期，那么需要用户重新登录
-
 
 ## Heroku 部署
 
@@ -97,23 +91,24 @@ createdb blog -O vapor -E UTF8 -e
 
 ### 注册 Heroku 账户
 
-您将需要一个heroku帐户，如果您没有，请在此处注册：[https://signup.heroku.com/](https://signup.heroku.com/)
+您将需要一个 heroku 帐户，如果您没有，请在此处注册：[https://signup.heroku.com/](https://signup.heroku.com/)
 
 ### 安装 CLI
 
 确保已安装 heroku cli 工具。
 
-* HomeBrew
+- HomeBrew
 
-    ```sh
-    brew install heroku/brew/heroku
-    ```
+  ```sh
+  brew install heroku/brew/heroku
+  ```
 
-* 其他安装选项
+- 其他安装选项
   在此处查看替代安装选项：[https://devcenter.heroku.com/articles/heroku-cli#download-and-install](https://devcenter.heroku.com/articles/heroku-cli#download-and-install).
 
 ### 登录
-安装cli后，请输入以下内容：
+
+安装 cli 后，请输入以下内容：
 
 ```sh
 $ heroku login
@@ -127,8 +122,7 @@ $ heroku auth:whoami
 
 ### 创建一个应用程序
 
-访问 `[dashboard.heroku.com](https://dashboard.heroku.com)`，登录您的帐户，并从右上角的下拉列表中创建一个新应用程序。按照 Heroku 提供的提示进行操作即可。
-
+访问 [dashboard.heroku.com](https://dashboard.heroku.com)，登录您的帐户，并从右上角的下拉列表中创建一个新应用程序。按照 Heroku 提供的提示进行操作即可。
 
 ### Git
 
@@ -142,9 +136,9 @@ Heroku 使用 Git 部署您的应用程序，因此您需要将项目放入 Git 
 $ git init
 ```
 
-#### Master 分支
+#### main 分支
 
-默认情况下，Heroku 部署 master 分支。在推送之前，请确保所有更改都已签入该分支。
+默认情况下，Heroku 部署 main 分支。在推送之前，请确保所有更改都已签入该分支。
 
 检查您当前的分支：
 
@@ -155,15 +149,15 @@ $ git branch
 星号表示当前分支：
 
 ```sh
-* master
+* main
   commander
   other-branches
 ```
 
-如果您当前不在 `master` 分支上，请输入以下命令切换到 `master` 分支：
+如果您当前不在 `main` 分支上，请输入以下命令切换到 `main` 分支：
 
 ```sh
-$ git checkout master
+$ git checkout main
 ```
 
 #### 提交变更
@@ -238,7 +232,7 @@ $ git commit -m "adding heroku build files"
 您已经准备好部署，可以在终端上运行它。构建可能需要一段时间。
 
 ```sh
-$ git push heroku master
+$ git push heroku main
 ```
 
 #### Scale Up
@@ -251,11 +245,11 @@ heroku ps:scale web=1
 
 #### 持续部署
 
-每当您想更新时，只需将最新的更改放入master并推送到heroku，它将重新部署。
+每当您想更新时，只需将最新的更改放入 main 并推送到 heroku，它将重新部署。
 
 #### Postgres
 
-##### 添加PostgreSQL数据库
+##### 添加 PostgreSQL 数据库
 
 在 [dashboard.heroku.com](https://dashboard.heroku.com) 访问您的应用程序，然后转到 `Add-ons` 部分。
 
@@ -319,9 +313,8 @@ $ heroku run Run -- revert --all --yes --env production
 $ heroku run Run -- migrate --env production
 ```
 
-
-
 ## 其他
+
 杀死指定端口的进程
 
 ```sh
@@ -334,5 +327,3 @@ kill xxxx
 ```
 mkdir -p Resources/Views
 ```
-
-
