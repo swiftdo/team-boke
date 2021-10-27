@@ -30,13 +30,20 @@ public func configure(_ app: Application) throws {
                                                   defaultExtension: "html"))
     app.views.use(.leaf)
     
-
+    
+    
     // 数据库配置
-    app.databases.use(.postgres(hostname: "localhost",
+    if let databaseURL = Environment.get("DATABASE_URL") {
+        app.databases.use(try .postgres(url: databaseURL),
+                          as: .psql)
+    } else {
+    
+        app.databases.use(.postgres(hostname: "localhost",
                                 username: "vapor",
                                 password: "vapor",
                                 database: "blog"),
-                      as: .psql)
+                          as: .psql)
+    }
     
     
     try routes(app)
