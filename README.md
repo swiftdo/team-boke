@@ -247,6 +247,9 @@ heroku ps:scale web=1
 
 每当您想更新时，只需将最新的更改放入 main 并推送到 heroku，它将重新部署。
 
+除了以上的方式，其实直接在heroku控制台操作即可：
+![](http://mmbiz.qpic.cn/mmbiz_png/3wD9LKPpvOUoeQH5iajQhnoq1jiaYMYBkeCVWbuu3EL7KUgxeLbaupCsOiaL0BnEEiaiaoVQzSQomyUFE8YEoOLibibmw/0?wx_fmt=png)
+
 #### Postgres
 
 ##### 添加 PostgreSQL 数据库
