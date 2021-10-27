@@ -225,8 +225,11 @@ heroku ps:scale web=1
 
 现在，我们必须告诉我们的应用程序如何访问数据库。在项目的根目录中，运行以下命令：
 
-```sh
+```shell
 $ heroku config
+
+# 或者指定某个应用
+$ heroku config -a teamboke 
 ```
 
 这将会有如下输出：
