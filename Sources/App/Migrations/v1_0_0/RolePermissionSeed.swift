@@ -6,8 +6,29 @@
 //
 
 import Fluent
+import Foundation
 
-struct RolePermissionSeed: Migration {
+struct RolePermissionSeed: AsyncMigration {
+    
+    func prepare(on database: Database) async throws {
+        
+        let allPers: [Seed.Permission] = Seed.Permission.allCases
+        let allRols: [Seed.Role] = Seed.Role.allCases
+        
+        
+
+        
+        let url = URL(string: "https://hws.dev/users.csv")!
+        for try await line in url.lines {
+                print("Received user: \(line)")
+            }
+        
+    }
+    
+    func revert(on database: Database) async throws {
+        try await Role.query(on: database).delete()
+        try await Permission.query(on: database).delete()
+    }
 
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         
@@ -46,10 +67,4 @@ struct RolePermissionSeed: Migration {
 
     }
 
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        database.eventLoop.flatten([
-            Role.query(on: database).delete(),
-            Permission.query(on: database).delete(),
-        ])
-    }
 }

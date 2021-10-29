@@ -7,9 +7,9 @@
 
 import Fluent
 
-struct CreateRefreshToken: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(RefreshToken.schema)
+struct CreateRefreshToken: AsyncMigration {
+    func prepare(on database: Database) async throws {
+        try await database.schema(RefreshToken.schema)
             .id()
             .field(RefreshToken.FieldKeys.userId, .uuid, .references(User.schema, .id))
             .field(RefreshToken.FieldKeys.token, .string, .required)
@@ -18,8 +18,10 @@ struct CreateRefreshToken: Migration {
             .unique(on:RefreshToken.FieldKeys.token)
             .create()
     }
-
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(RefreshToken.schema).delete()
+    
+    func revert(on database: Database) async throws {
+        try await database.schema(RefreshToken.schema).delete()
     }
+
+
 }

@@ -7,9 +7,10 @@
 
 import Fluent
 
-struct CreateAccessToken: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(AccessToken.schema)
+struct CreateAccessToken: AsyncMigration {
+    
+    func prepare(on database: Database) async throws {
+        try await database.schema(AccessToken.schema)
             .id()
             .field(AccessToken.FieldKeys.userId, .uuid, .references(User.schema, .id))
             .field(AccessToken.FieldKeys.token, .string, .required)
@@ -18,8 +19,8 @@ struct CreateAccessToken: Migration {
             .unique(on: AccessToken.FieldKeys.token)
             .create()
     }
-
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(AccessToken.schema).delete()
+    
+    func revert(on database: Database) async throws {
+        try await database.schema(AccessToken.schema).delete()
     }
 }

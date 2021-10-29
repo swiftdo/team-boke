@@ -7,28 +7,30 @@
 
 import Fluent
 
-struct CreateUserAuth: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.enum(UserAuth.AuthType.schema)
+struct CreateUserAuth: AsyncMigration {
+    
+    func prepare(on database: Database) async throws {
+        
+        let authType = try await database.enum(UserAuth.AuthType.schema)
             .case("email")
             .case("wxapp")
             .create()
-            .flatMap { authType in
-                database.schema(UserAuth.schema)
-                    .id()
-                    .field(UserAuth.FieldKeys.userId, .uuid, .references(User.schema, .id))
-                    .field(UserAuth.FieldKeys.authType, authType, .required)
-                    .field(UserAuth.FieldKeys.identifier, .string, .required)
-                    .field(UserAuth.FieldKeys.credential, .string, .required)
-                    .field(UserAuth.FieldKeys.createdAt, .datetime)
-                    .field(UserAuth.FieldKeys.updatedAt, .datetime)
-                    .create()
-        }
+        
+        try await database.schema(UserAuth.schema)
+            .id()
+            .field(UserAuth.FieldKeys.userId, .uuid, .references(User.schema, .id))
+            .field(UserAuth.FieldKeys.authType, authType, .required)
+            .field(UserAuth.FieldKeys.identifier, .string, .required)
+            .field(UserAuth.FieldKeys.credential, .string, .required)
+            .field(UserAuth.FieldKeys.createdAt, .datetime)
+            .field(UserAuth.FieldKeys.updatedAt, .datetime)
+            .create()
+        
+    }
+    
+    func revert(on database: Database) async throws {
+        try await database.schema(UserAuth.schema).delete()
+        try await database.enum(UserAuth.AuthType.schema).delete()
     }
 
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(UserAuth.schema).delete().flatMap {
-            database.enum(UserAuth.AuthType.schema).delete()
-        }
-    }
 }

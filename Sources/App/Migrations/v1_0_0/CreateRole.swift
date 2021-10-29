@@ -7,16 +7,18 @@
 
 import Fluent
 
-struct CreateRole: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(Role.schema)
+struct CreateRole: AsyncMigration {
+    
+    func prepare(on database: Database) async throws {
+        try await database.schema(Role.schema)
             .id()
             .field(Role.FieldKeys.name, .string, .required)
             .unique(on: Role.FieldKeys.name)
             .create()
     }
-
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(Role.schema).delete()
+    
+    func revert(on database: Database) async throws {
+        try await database.schema(Role.schema).delete()
     }
+    
 }
