@@ -35,6 +35,14 @@
 * 后台模板参考：[https://github.com/tailwindadmin/admin](https://github.com/tailwindadmin/admin)
 * 前端站点参考：[https://sharecuts.cn/shortcut/5681](https://sharecuts.cn/shortcut/5681)
 
+
+# 分支管理
+
+* main 是稳定分支
+* dev 是开发分支
+
+main 的改动会触发项目的自动部署，无需人工改动
+
 # 自定义工作目录
 
 ![](https://docs.vapor.codes/4.0/images/xcode-scheme-options.png)
