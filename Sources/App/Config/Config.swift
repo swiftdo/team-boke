@@ -10,7 +10,6 @@ import Vapor
 // services
 
 struct MyConfig {
-    
     let adminEmail = "1164258202@qq.com"
 }
 

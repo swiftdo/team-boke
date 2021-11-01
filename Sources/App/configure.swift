@@ -6,6 +6,9 @@ import FluentPostgresDriver
 
 public func configure(_ app: Application) throws {
     
+    /// 初始化环境
+    app.myConfig = .init()
+    
     // 中间件配置
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     

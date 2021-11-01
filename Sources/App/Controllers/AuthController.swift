@@ -13,7 +13,7 @@ struct AuthController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         routes.group("auth") { auth in
             auth.post("register", use: register)
-            // auth.post("login", use: login)
+            auth.post("login", use: login)
         }
     }
 }
