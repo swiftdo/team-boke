@@ -9,3 +9,15 @@ import Vapor
 
 
 protocol Out: Content {}
+
+
+extension String: Out {
+    
+}
+
+extension Array: Out where Element: Out {
+
+}
+
+
+

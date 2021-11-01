@@ -50,14 +50,7 @@ extension RefreshToken {
     }
 }
 
-extension UserAuth: ModelAuthenticatable {
-    static let usernameKey = \UserAuth.$identifier
-    static let passwordHashKey = \UserAuth.$credential
 
-    func verify(password: String) throws -> Bool {
-        try Bcrypt.verify(password, created: self.credential)
-    }
-}
 
 
 
