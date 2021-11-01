@@ -23,7 +23,7 @@ extension AuthController {
         try InLogin.validate(content: req)
         let inLogin = try req.content.decode(InLogin.self)
         
-        let ua = try await getUserAuth(email: inRegister.email, req: req)
+        let ua = try await getUserAuth(email: inLogin.email, req: req)
         
         guard let userAuth = ua else {
             throw ApiError(code: .userNotExist)
@@ -100,7 +100,7 @@ extension AuthController {
     func getUserAuth(email: String, req: Request) async throws -> UserAuth? {
         return try await UserAuth.query(on: req.db)
             .filter(\.$authType == .email)
-            .filter(\.$identifier == inRegister.email)
+            .filter(\.$identifier == email)
             .first()
     }
     
