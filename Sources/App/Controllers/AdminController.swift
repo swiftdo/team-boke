@@ -19,14 +19,14 @@ struct AdminController: AuthableController {
 }
 
 extension AdminController {
-    private func register(_ req: Request) async throws -> View{
+    private func login(_ req: Request) async throws -> View{
         try InLogin.validate(content: req)
         let inLogin = try req.content.decode(InLogin.self)
         
         let ua = try await getUserAuth(email: inLogin.email, req: req)
         
         guard let userAuth = ua else {
-            throw ApiError(code: .userNotExist)
+            return try await req.view.render("/auth/login", LoginContext(error: "该邮箱未注册"))
         }
         
         // 判断密码是否正确
@@ -36,7 +36,7 @@ extension AdminController {
             .verify(inLogin.password,created: userAuth.credential)
         
         guard isAuth else {
-            throw ApiError(code: .invalidEmailOrPassword)
+            return try await req.view.render("/auth/login", LoginContext(error: "邮箱或者密码不正确"))
         }
         
         let user = try await userAuth.$user.get(on: req.db)
@@ -53,14 +53,14 @@ extension AdminController {
         return try await req.view.render("/auth/login")
     }
     
-    private func login(_ req: Request) async throws -> View{
+    private func register(_ req: Request) async throws -> View{
         
         try InRegister.validate(content: req)
         let inRegister = try req.content.decode(InRegister.self)
         let userAuth = try await getUserAuth(email: inRegister.email, req: req)
 
         guard userAuth == nil else {
-            throw ApiError(code: .userExist)
+            return try await req.view.render("/auth/register", LoginContext(error: "该邮箱已注册"))
         }
 
         let user = User(name: inRegister.name, email: inRegister.email)

@@ -6,10 +6,14 @@
 
 #export("body"):
 <div class="bg-gray-700">
+    
+    #if(error):
+    <div class="bg-red-300 ml-80 mr-80 p-3 rounded text-red">#(error)</div>
+    #endif
     <div class="container mx-auto h-full flex flex-1 justify-center items-center">
         <div class="w-full max-w-lg">
         <div class="leading-loose">
-            <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl" action="/api/auth/login" method="post">
+            <form class="max-w-xl m-4 p-10 bg-white rounded shadow-xl" action="/admin/login" method="post">
                 <p class="text-gray-800 font-medium text-center text-lg font-bold">登录</p>
                 <div class="">
                     <label class="block text-sm text-gray-00 my-2" for="email">邮箱</label>

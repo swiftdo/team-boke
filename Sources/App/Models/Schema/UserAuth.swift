@@ -84,7 +84,6 @@ struct UserSessionAuthenticator: AsyncSessionAuthenticator {
     typealias User = UserAuth
     
     func authenticate(sessionID: String, for request: Request) async throws {
-        // 判断密码是否正确
         let userAuth = try await UserAuth.query(on: request.db).filter(\.$identifier == sessionID).first()
         
         if let ua = userAuth {
