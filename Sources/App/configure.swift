@@ -23,7 +23,6 @@ public func configure(_ app: Application) throws {
     app.middleware.use(error)
     app.middleware.use(cors, at: .beginning)
     
-    
     // leaf 配置为 html 后缀
     let detected = app.directory.viewsDirectory
     app.leaf.sources = .singleSource(NIOLeafFiles(fileio: app.fileio,

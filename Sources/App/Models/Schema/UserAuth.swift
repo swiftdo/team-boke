@@ -72,3 +72,26 @@ extension UserAuth: ModelAuthenticatable {
         try Bcrypt.verify(password, created: self.credential)
     }
 }
+
+extension UserAuth: SessionAuthenticatable {
+    typealias SessionID = String
+    var sessionID: SessionID {
+        self.identifier
+    }
+}
+
+struct UserSessionAuthenticator: AsyncSessionAuthenticator {
+    typealias User = UserAuth
+    
+    func authenticate(sessionID: String, for request: Request) async throws {
+        // 判断密码是否正确
+        let userAuth = try await UserAuth.query(on: request.db).filter(\.$identifier == sessionID).first()
+        
+        if let ua = userAuth {
+            let user = try await ua.$user.get(on: request.db)
+            request.auth.login(user)
+        }
+    }
+}
+
+
