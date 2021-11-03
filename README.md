@@ -335,3 +335,11 @@ kill xxxx
 ```
 mkdir -p Resources/Views
 ```
+
+# Ubantu 20.04 
+
+* swiftenv
+* clang
+* vapor
+* zlib: sudo apt install zlib1g-dev
+
