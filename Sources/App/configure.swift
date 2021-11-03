@@ -11,6 +11,7 @@ public func configure(_ app: Application) throws {
     
     // 中间件配置
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    app.middleware.use(app.sessions.middleware)
     
     let corsConfiguration = CORSMiddleware.Configuration(
         allowedOrigin: .all,
@@ -18,9 +19,6 @@ public func configure(_ app: Application) throws {
         allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith, .userAgent, .accessControlAllowOrigin]
     )
     let cors = CORSMiddleware(configuration: corsConfiguration)
-    let error = ErrorMiddleware.custom(environment: app.environment)
-    
-    app.middleware.use(error)
     app.middleware.use(cors, at: .beginning)
     
     // leaf 配置为 html 后缀
@@ -46,9 +44,7 @@ public func configure(_ app: Application) throws {
                           as: .psql)
     }
     
-    
     try routes(app)
     try migrations(app)
     try services(app)
-    
 }
