@@ -46,7 +46,6 @@ public func configure(_ app: Application) throws {
                           as: .psql)
     }
     
-    
     try routes(app)
     try migrations(app)
     try services(app)
