@@ -11,6 +11,7 @@ import Vapor
 
 struct MyConfig {
     let adminEmail = "1164258202@qq.com"
+    let routePaths = RoutePaths()
 }
 
 struct MyConfigKey: StorageKey {
@@ -33,3 +34,4 @@ extension Request {
         return application.myConfig!
     }
 }
+

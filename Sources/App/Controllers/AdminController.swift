@@ -27,7 +27,7 @@ extension AdminController {
     private func dashboard(_ req: Request) async throws -> View {
         let user = try req.auth.require(User.self)
         req.logger.info("\(user.email)")
-        return try await req.view.render("/admin/dashboard", DashboardContext(email: user.email))
+        return try await req.view.render(req.myConfig.routePaths.dashboard, DashboardContext(email: user.email))
     }
     
     private func login(_ req: Request) async throws -> Response {
@@ -36,7 +36,7 @@ extension AdminController {
         } catch {
             return try await req
                 .view
-                .render("/auth/login", LoginContext(error: error.localizedDescription))
+                .render(req.myConfig.routePaths.login, LoginContext(error: error.localizedDescription))
                 .encodeResponse(for: req)
         }
         
@@ -46,7 +46,7 @@ extension AdminController {
         guard let userAuth = ua else {
             return try await req
                 .view
-                .render("/auth/login", LoginContext(error: "该邮箱未注册"))
+                .render(req.myConfig.routePaths.login, LoginContext(error: "该邮箱未注册"))
                 .encodeResponse(for: req)
         }
         
@@ -59,23 +59,36 @@ extension AdminController {
         guard isAuth else {
             return try await req
                 .view
-                .render("/auth/login", LoginContext(error: "邮箱或者密码不正确"))
+                .render(req.myConfig.routePaths.login, LoginContext(error: "邮箱或者密码不正确"))
                 .encodeResponse(for: req)
         }
         
         let user = try await userAuth.$user.get(on: req.db)
         req.auth.login(user)
-        return req.redirect(to: "dashboard")
+        // TODO: why dashboard not admin/dashboard?, if to "dashboard", to: localhost/admin/dashboard  if "/dashboard", to "localhost/dashboard"
+        return req.redirect(to: req.myConfig.routePaths.dashboard, type: .permanent)
     }
     
-    private func register(_ req: Request) async throws -> View{
+    private func register(_ req: Request) async throws -> Response {
+
+        do {
+            try InRegister.validate(content: req)
+        } catch {
+            return try await req
+                .view
+                .render(req.myConfig.routePaths.register, RegisterContext(error: error.localizedDescription))
+                .encodeResponse(for: req)
+        }
         
-        try InRegister.validate(content: req)
+        
         let inRegister = try req.content.decode(InRegister.self)
         let userAuth = try await getUserAuth(email: inRegister.email, req: req)
 
         guard userAuth == nil else {
-            return try await req.view.render("/auth/register", LoginContext(error: "该邮箱已注册"))
+            return try await req
+                .view
+                .render(req.myConfig.routePaths.register, RegisterContext(error: "该邮箱已注册"))
+                .encodeResponse(for: req)
         }
 
         let user = User(name: inRegister.name, email: inRegister.email)
@@ -95,7 +108,7 @@ extension AdminController {
         
         try await user.create(on: req.db)
 
-        // 保存的应该不是密码
+        // 保存的不是pure密码
         let pwd = try await req.password.async.hash(inRegister.password)
         
         let ua = try UserAuth(userId: user.requireID(),
@@ -104,7 +117,8 @@ extension AdminController {
                               credential: pwd)
         
         try await ua.create(on: req.db)
-        return try await req.view.render("/admin/dashboard")
+
+        return req.redirect(to: req.myConfig.routePaths.login, type: .permanent)
     }
     
 }
