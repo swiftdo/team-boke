@@ -11,7 +11,17 @@ import Foundation
 
 struct AuthController: AuthableController {
     func boot(routes: RoutesBuilder) throws {
+        
         routes.group("auth") { auth in
+            auth.get("login") { req in
+                return req.view.render("auth/login")
+            }
+            auth.get("register") { req in
+                return req.view.render("auth/register")
+            }
+        }
+    
+        routes.group("api", "auth") { auth in
             auth.post("register", use: register)
             auth.post("login", use: login)
         }

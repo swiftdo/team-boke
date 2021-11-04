@@ -65,3 +65,5 @@ extension User {
 }
 
 extension User: Authenticatable {}
+
+extension User: ModelSessionAuthenticatable {}
