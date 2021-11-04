@@ -33,9 +33,11 @@ public func configure(_ app: Application) throws {
     
     
     // 数据库配置
-    if let databaseURL = Environment.get("DATABASE_URL") {
-        try app.databases.use(.postgres(url: databaseURL),
-                          as: .psql)
+    if let databaseURL = Environment.get("DATABASE_URL"), var postgresConfig = PostgresConfiguration(url: databaseURL) {
+        postgresConfig.tlsConfiguration = .forClient(certificateVerification: .none)
+        app.databases.use(.postgres(
+            configuration: postgresConfig
+        ), as: .psql)
     } else {
         app.databases.use(.postgres(hostname: "localhost",
                                 username: "vapor",
