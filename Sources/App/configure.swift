@@ -34,7 +34,10 @@ public func configure(_ app: Application) throws {
     
     // 数据库配置
     if let databaseURL = Environment.get("DATABASE_URL"), var postgresConfig = PostgresConfiguration(url: databaseURL) {
-        postgresConfig.tlsConfiguration = .forClient(certificateVerification: .none)
+        
+        var tlsConfiguration: TLSConfiguration = .makeClientConfiguration()
+        tlsConfiguration.certificateVerification = .none
+        postgresConfig.tlsConfiguration = tlsConfiguration
         app.databases.use(.postgres(
             configuration: postgresConfig
         ), as: .psql)
