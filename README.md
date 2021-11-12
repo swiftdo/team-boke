@@ -3,7 +3,8 @@
 <!-- TOC -->
 
 - [Vapor实战项目](#vapor%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE)
-- [参考](#%E5%8F%82%E8%80%83)
+- [项目模仿参考](#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E4%BB%BF%E5%8F%82%E8%80%83)
+- [分支管理](#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86)
 - [自定义工作目录](#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95)
 - [路由](#%E8%B7%AF%E7%94%B1)
 - [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
@@ -27,6 +28,9 @@
         - [配置数据库](#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93)
         - [还原数据库](#%E8%BF%98%E5%8E%9F%E6%95%B0%E6%8D%AE%E5%BA%93)
 - [其他](#%E5%85%B6%E4%BB%96)
+- [Ubuntu 20.04](#ubuntu-2004)
+- [Leaf 的使用](#leaf-%E7%9A%84%E4%BD%BF%E7%94%A8)
+- [配置远程 vscode remote](#%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B-vscode-remote)
 
 <!-- /TOC -->
 
@@ -387,11 +391,6 @@ mkdir -p Resources/Views
     <body><p>Welcome to TEAM-BOKE!</p></body>
 </html>
 ```
-
-
-
-
-
 
 # 配置远程 vscode remote
 
