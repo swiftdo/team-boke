@@ -372,3 +372,4 @@ cat /home/id_rsa.pub >> ~/.ssh/authorized_keys
 
 5. 使用 `cmd+shift+p` 的快捷键调用命令，执行 `Remote-SSH:Connect to Host...`, 然后选择配置文件的路径
 
+图文教程可[参考文章](https://zhuanlan.zhihu.com/p/68330319)
