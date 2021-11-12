@@ -349,13 +349,15 @@ mkdir -p Resources/Views
 
 # Leaf 的使用
 
-模板复用，需要用到 `#extend`，`#import` 和 `#export`，那么如何理解这两个tag:
+模板复用，需要用到 `#extend`，`#import` 和 `#export`，那么如何理解这三个tag:
 
 `#extend` 标签允许您将一个模板的内容复制到另一个模板中。
-`#import` 是暴露一个插槽
-`#export` 是实现特性的插槽
 
-所以，举例：
+`#import` 是暴露一个插槽。
+
+`#export` 是实现特定的插槽。
+
+举例：
 
 ```html
 <!-- base.html -->
@@ -368,7 +370,8 @@ mkdir -p Resources/Views
 ```
 
 `base.html` 是个模板，它里面通过 `#import` 定义了 body 这么一个插槽，方便扩展它的文件可以自定义实现。
-复用这个 base.html 模板，假设我们创建了 `welcome.html`
+
+复用这个`base.html`模板，假设我们创建了 `welcome.html`：
 
 ```html
 <!-- welcome.html -->
@@ -380,8 +383,10 @@ mkdir -p Resources/Views
 ```
 
 `#extend` 后面是我们要扩展的文件名，比如我们要扩展 `base.html`, 那么就传入 `base` 即可。
+
 `#export` 是我们对基模板中的插槽的自定义实现，指明需要实现的插槽的名字。
-那么当 `["title": "Hi there!"]` 从 Swift 传递过来时， welcome.html 将被渲染为：
+
+那么当 `["title": "Hi there!"]` 从`Swift`传递过来时，`welcome.html`将被渲染为：
 
 ```html
 <html>
@@ -396,14 +401,14 @@ mkdir -p Resources/Views
 
 非常方便编写服务器代码
 
-1. 在插件市场中搜索并安装 Remote Development
-2. 执行 ssh-keygen 命令创建密钥
+1.在插件市场中搜索并安装 Remote Development
+2.执行 ssh-keygen 命令创建密钥
 
 ```shell
 ssh-keygen -t rsa -C  'your email@xxx.com'
 ```
 
-3. 生成ssh key了之后，需要将ssh key放到远程服务器上。
+3.生成ssh key了之后，需要将ssh key放到远程服务器上。
 
 使用 scp 命令将本地的公钥文件 id_rsa.pub 复制到需要连接的Linux服务器：
 
@@ -411,12 +416,12 @@ ssh-keygen -t rsa -C  'your email@xxx.com'
 scp ~/.ssh/id_rsa.pub 用户名@ip:/home/id_rsa.pub
 ```
 
-4. 登录服务器，把公钥追加到服务器ssh认证文件中：
+4.登录服务器，把公钥追加到服务器ssh认证文件中：
 
 ```shell
 cat /home/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 
-5. 使用 `cmd+shift+p` 的快捷键调用命令，执行 `Remote-SSH:Connect to Host...`, 然后选择配置文件的路径
+5.使用 `cmd+shift+p` 的快捷键调用命令，执行 `Remote-SSH:Connect to Host...`, 然后选择配置文件的路径
 
 图文教程可[参考文章](https://zhuanlan.zhihu.com/p/68330319)
