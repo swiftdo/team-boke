@@ -336,7 +336,7 @@ kill xxxx
 mkdir -p Resources/Views
 ```
 
-# Ubantu 20.04 
+# Ubuntu 20.04 
 
 * swiftenv
 * clang
@@ -345,8 +345,56 @@ mkdir -p Resources/Views
 
 # Leaf 的使用
 
+模板复用，需要用到 `#extend`，`#import` 和 `#export`，那么如何理解这两个tag:
+
+`#extend` 标签允许您将一个模板的内容复制到另一个模板中。
+`#import` 是暴露一个插槽
+`#export` 是实现特性的插槽
+
+所以，举例：
+
+```html
+<!-- base.html -->
+<html>
+    <head>
+        <title>#(title)</title>
+    </head>
+    <body>#import("body")</body>
+</html>
+```
+
+`base.html` 是个模板，它里面通过 `#import` 定义了 body 这么一个插槽，方便扩展它的文件可以自定义实现。
+复用这个 base.html 模板，假设我们创建了 `welcome.html`
+
+```html
+<!-- welcome.html -->
+#extend("base"):
+    #export("body"):
+        <p>Welcome to TEAM-BOKE!</p>
+    #endexport
+#endextend
+```
+
+`#extend` 后面是我们要扩展的文件名，比如我们要扩展 `base.html`, 那么就传入 `base` 即可。
+`#export` 是我们对基模板中的插槽的自定义实现，指明需要实现的插槽的名字。
+那么当 `["title": "Hi there!"]` 从 Swift 传递过来时， welcome.html 将被渲染为：
+
+```html
+<html>
+    <head>
+        <title>Hi there!</title>
+    </head>
+    <body><p>Welcome to TEAM-BOKE!</p></body>
+</html>
+```
+
+
+
+
+
 
 # 配置远程 vscode remote
+
 非常方便编写服务器代码
 
 1. 在插件市场中搜索并安装 Remote Development
