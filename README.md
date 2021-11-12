@@ -343,7 +343,32 @@ mkdir -p Resources/Views
 * vapor
 * zlib: sudo apt install zlib1g-dev
 
+# Leaf 的使用
 
-# Leaf
 
-ww
+# 配置远程 vscode remote
+非常方便编写服务器代码
+
+1. 在插件市场中搜索并安装 Remote Development
+2. 执行 ssh-keygen 命令创建密钥
+
+```shell
+ssh-keygen -t rsa -C  'your email@xxx.com'
+```
+
+3. 生成ssh key了之后，需要将ssh key放到远程服务器上。
+
+使用 scp 命令将本地的公钥文件 id_rsa.pub 复制到需要连接的Linux服务器：
+
+```shell
+scp ~/.ssh/id_rsa.pub 用户名@ip:/home/id_rsa.pub
+```
+
+4. 登录服务器，把公钥追加到服务器ssh认证文件中：
+
+```shell
+cat /home/id_rsa.pub >> ~/.ssh/authorized_keys
+```
+
+5. 使用 `cmd+shift+p` 的快捷键调用命令，执行 `Remote-SSH:Connect to Host...`, 然后选择配置文件的路径
+
