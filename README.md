@@ -428,7 +428,7 @@ cat /home/id_rsa.pub >> ~/.ssh/authorized_keys
 图文教程可[参考文章](https://zhuanlan.zhihu.com/p/68330319)
 
 
-# 配置 VSCode 编写 Swift 代码
+# 配置 VSCode，编写 Swift 代码更舒心
 
 在 Linux 的环境中，建议用swiftenv 安装Swift，因为这样安装可以快速管理多个swift版本。
 
