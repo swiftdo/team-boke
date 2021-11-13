@@ -1,0 +1,5 @@
+{
+    "sourcekit-lsp.toolchainPath": "/home/mac/.swiftenv/shims/sourcekit-lsp",
+    "sde.languageServerMode": "sourcekit-lsp",
+    "sourcekit-lsp.serverPath": "/home/mac/.swiftenv/shims/sourcekit-lsp"
+}

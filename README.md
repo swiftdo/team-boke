@@ -31,6 +31,7 @@
 - [Ubuntu 20.04](#ubuntu-2004)
 - [Leaf 的使用](#leaf-%E7%9A%84%E4%BD%BF%E7%94%A8)
 - [配置远程 vscode remote](#%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B-vscode-remote)
+- [配置 VSCode 编写 Swift 代码](#%E9%85%8D%E7%BD%AE-vscode-%E7%BC%96%E5%86%99-swift-%E4%BB%A3%E7%A0%81)
 
 <!-- /TOC -->
 
@@ -425,3 +426,39 @@ cat /home/id_rsa.pub >> ~/.ssh/authorized_keys
 5.使用 `cmd+shift+p` 的快捷键调用命令，执行 `Remote-SSH:Connect to Host...`, 然后选择配置文件的路径
 
 图文教程可[参考文章](https://zhuanlan.zhihu.com/p/68330319)
+
+
+# 配置 VSCode 编写 Swift 代码
+
+在 Linux 的环境中，建议用swiftenv 安装Swift，因为这样安装可以快速管理多个swift版本。
+
+在用 VSCode 编写 Swift 代码，首先我们需要代码高亮，代码自动补全。这是两个非常基础的需求。
+
+对于代码高亮VSCode 已经帮我们支持了。
+
+那么自动补全的话，我们需要安装 SourceKit-LSP 的插件。
+
+LSP的全程是Language Sever Protocol，是微软提出的一项标准化协议，旨在统一开发工具与Lanuguage Server之间的通信。LSP为支持的语言提供了一套通用的功能集，包括：语法高亮、自动补全、定义跳转、查找引用等等。
+
+Swift ToolChain 中已经集成了 `LSP`, 不行，你可以快速找下路径：
+
+```shell
+$ which sourcekit-lsp
+/home/mac/.swiftenv/shims/sourcekit-lsp
+```
+
+> sourcekit-lsp 这个路径等下配置 vscode 的时候我们需要用到。
+
+第二步，就是安装插件，很幸运，苹果给我们写好了文档，操作下来也没啥问题
+
+[VSCode SourceKit-LSP 插件文档](https://github.com/apple/sourcekit-lsp/blob/main/Editors/vscode/README.md)
+
+第三步，配置 sourcekit 的路径。
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a962fba79bff48338656781bf33d2dcd~tplv-k3u1fbpfcp-watermark.awebp)
+
+将 Sourcekit-lsp: Server Path 中的路径配置为 `/home/mac/.swiftenv/shims/sourcekit-lsp`。
+然后重启 VSCode，便可支持代码自动补全、定义跳转等功能。
+
+如果还需要更丰富的配置，如代码格式化，Debug 等，那么可以参考这篇文章：[在Linux系统上搭建Swift开发调试环境](https://juejin.cn/post/6929392693806120968#heading-20)
+

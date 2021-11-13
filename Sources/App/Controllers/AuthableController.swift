@@ -11,7 +11,7 @@ import Fluent
 protocol AuthableController: RouteCollection {
     func getUserAuth(email: String, req: Request) async throws -> UserAuth?
     func removeAllTokensFor(userId: UUID, req: Request) async throws
-    func createTokenFor(userId: UUID, req: Request) async throws -> OutToken
+    func createTokenFor(userId: UUID, req: Request) async throws -> OutToken   
 }
 
 extension AuthableController {

@@ -11,7 +11,6 @@ import Foundation
 
 struct AdminController: AuthableController {
     func boot(routes: RoutesBuilder) throws {
-        
         let authSessionsRoutes = routes.grouped(User.sessionAuthenticator())
         authSessionsRoutes.group("admin") { admin in
             admin.post("register", use: register)
@@ -19,20 +18,20 @@ struct AdminController: AuthableController {
             
             let authGuard = admin.grouped(User.guardMiddleware())
             authGuard.get("dashboard", use: dashboard)
-            authGurad.get("user", use: users)
+            authGuard.get("user", use: users)
         }
     }
 }
 
 extension AdminController {
 
-    private func users(_ req: Request) async throws - View {
+    private func users(_ req: Request) async throws -> View {
         // 获取全部用户，以及当前登录的用户信息
         // 然后渲染到用户列表中
         let user = try req.auth.require(User.self)
         req.logger.info("\(user.email)")
 
-        let users = try await User.query(on: req).all()
+        // let users = try await User.query(on: req.db).all()
         // TODO: 
         return try await req.view.render(req.myConfig.routePaths.dashboard, DashboardContext(email: user.email))
     }
