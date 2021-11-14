@@ -12,11 +12,14 @@ import Foundation
 struct AdminController: AuthableController {
     func boot(routes: RoutesBuilder) throws {
         let authSessionsRoutes = routes.grouped(User.sessionAuthenticator())
+        
         authSessionsRoutes.group("admin") { admin in
             admin.post("register", use: register)
             admin.post("login", use: login)
             
-            let authGuard = admin.grouped(User.guardMiddleware())
+            let protectedRoutes = admin.grouped(User.redirectMiddleware(path: "/auth/login?loginRequired=true"))
+            
+            let authGuard = protectedRoutes.grouped(User.guardMiddleware())
             authGuard.get("dashboard", use: dashboard)
             authGuard.get("users", use: adminUsers)
             authGuard.get("roles", use: adminRoles)
