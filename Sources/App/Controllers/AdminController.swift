@@ -18,22 +18,64 @@ struct AdminController: AuthableController {
             
             let authGuard = admin.grouped(User.guardMiddleware())
             authGuard.get("dashboard", use: dashboard)
-            authGuard.get("user", use: users)
+            authGuard.get("users", use: adminUsers)
+            authGuard.get("roles", use: adminRoles)
+            authGuard.get("permissions", use: adminPermissions)
+            
+            authGuard.get("articles", use: adminArticles)
+            authGuard.get("cates", use: adminCates)
+            authGuard.get("tags", use: adminTags)
         }
     }
 }
 
 extension AdminController {
+    
+    private func adminTags(_ req: Request)async throws -> View {
+        let path = req.myConfig.routePaths.adminTags
+        return try await req.view.render(path)
+    }
+    
+    private func adminCates(_ req: Request)async throws -> View {
+        let path = req.myConfig.routePaths.adminCates
+        return try await req.view.render(path)
+    }
+    
+    private func adminArticles(_ req: Request)async throws -> View {
+        let path = req.myConfig.routePaths.adminArticles
+        return try await req.view.render(path)
+    }
+    
+    private func adminPermissions(_ req: Request)async throws -> View {
+        let path = req.myConfig.routePaths.adminPermissions
+        return try await req.view.render(path)
+    }
+    
+    private func adminRoles(_ req: Request)async throws -> View {
+        let path = req.myConfig.routePaths.adminRoles
+        return try await req.view.render(path)
+    }
 
-    private func users(_ req: Request) async throws -> View {
+    private func adminUsers(_ req: Request) async throws -> View {
         // 获取全部用户，以及当前登录的用户信息
+        // 获取页面参数
+        let inAdminUser = try req.query.decode(InAdminUser?.self)
+        let page = inAdminUser?.page ?? 1
+        let per = inAdminUser?.per ?? 10
+        
         // 然后渲染到用户列表中
         let user = try req.auth.require(User.self)
         req.logger.info("\(user.email)")
-
-        // let users = try await User.query(on: req.db).all()
-        // TODO: 
-        return try await req.view.render(req.myConfig.routePaths.dashboard, DashboardContext(email: user.email))
+        
+        let path = req.myConfig.routePaths.adminUsers
+        
+        let users = try await User.query(on: req.db).paginate(PageRequest(page: page, per: per))
+        let outUsers = users.map(OutUser.init)
+        let context = AdminPageContext(user: .init(from: user), path: path, page: page, per: per, result: outUsers)
+        
+        req.logger.info("\(context)")
+        return try await req.view.render(path, context)
+                                         
     }
 
     private func dashboard(_ req: Request) async throws -> View {
