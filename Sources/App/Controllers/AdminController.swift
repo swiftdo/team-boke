@@ -28,11 +28,21 @@ struct AdminController: AuthableController {
             authGuard.get("articles", use: adminArticles)
             authGuard.get("cates", use: adminCates)
             authGuard.get("tags", use: adminTags)
+
+            authGuard.get("logout", use: adminLogout)
         }
     }
 }
 
 extension AdminController {
+
+    private func adminLogout(_ req: Request) async throws -> Response {
+        // TODO:为啥退出会无效
+        let _ = try req.auth.require(User.self)
+        req.session.destroy()
+        req.auth.logout(User.self)
+        return req.redirect(to: req.myConfig.routePaths.login, type: .permanent)
+    }
     
     private func adminTags(_ req: Request)async throws -> View {
         let path = req.myConfig.routePaths.adminTags
