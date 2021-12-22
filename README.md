@@ -31,7 +31,7 @@
 - [Ubuntu 20.04](#ubuntu-2004)
 - [Leaf 的使用](#leaf-%E7%9A%84%E4%BD%BF%E7%94%A8)
 - [配置远程 vscode remote](#%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B-vscode-remote)
-- [配置 VSCode 编写 Swift 代码](#%E9%85%8D%E7%BD%AE-vscode-%E7%BC%96%E5%86%99-swift-%E4%BB%A3%E7%A0%81)
+- [配置 VSCode，编写 Swift 代码更舒心](#%E9%85%8D%E7%BD%AE-vscode%E7%BC%96%E5%86%99-swift-%E4%BB%A3%E7%A0%81%E6%9B%B4%E8%88%92%E5%BF%83)
 
 <!-- /TOC -->
 
@@ -39,6 +39,15 @@
 
 * [https://www.xiaoduyu.com/](https://www.xiaoduyu.com/) 
 * [源码](https://github.com/54sword/api.xiaoduyu.com)
+
+# 项目规划
+
+| 项目 | 源码 |
+|-----|------|
+| web网站 | [https://github.com/swiftdo/web-team-boke.git](https://github.com/swiftdo/web-team-boke.git)|
+| App（iOS\Android）| [https://github.com/swiftdo/app-team-boke.git](https://github.com/swiftdo/app-team-boke.git) |
+| 后端API | [https://github.com/swiftdo/team-boke.git](https://github.com/swiftdo/team-boke.git)|
+| 后台管理 |[https://github.com/swiftdo/admin-team-boke.git](https://github.com/swiftdo/admin-team-boke.git) |
 
 
 # 分支管理
@@ -440,14 +449,14 @@ cat /home/id_rsa.pub >> ~/.ssh/authorized_keys
 
 LSP的全程是Language Sever Protocol，是微软提出的一项标准化协议，旨在统一开发工具与Lanuguage Server之间的通信。LSP为支持的语言提供了一套通用的功能集，包括：语法高亮、自动补全、定义跳转、查找引用等等。
 
-Swift ToolChain 中已经集成了 `LSP`, 可以通过以下命令查看其路径：
+Swift ToolChain 中已经集成了 `LSP`, 不行，你可以快速找下路径：
 
 ```shell
 $ which sourcekit-lsp
 /home/mac/.swiftenv/shims/sourcekit-lsp
 ```
 
-> sourcekit-lsp 这个路径在后续配置 vscode 的时候我们需要用到。
+> sourcekit-lsp 这个路径等下配置 vscode 的时候我们需要用到。
 
 第二步，就是安装插件，很幸运，苹果给我们写好了文档，操作下来也没啥问题
 
