@@ -440,14 +440,14 @@ cat /home/id_rsa.pub >> ~/.ssh/authorized_keys
 
 LSP的全程是Language Sever Protocol，是微软提出的一项标准化协议，旨在统一开发工具与Lanuguage Server之间的通信。LSP为支持的语言提供了一套通用的功能集，包括：语法高亮、自动补全、定义跳转、查找引用等等。
 
-Swift ToolChain 中已经集成了 `LSP`, 不行，你可以快速找下路径：
+Swift ToolChain 中已经集成了 `LSP`, 可以通过以下命令查看其路径：
 
 ```shell
 $ which sourcekit-lsp
 /home/mac/.swiftenv/shims/sourcekit-lsp
 ```
 
-> sourcekit-lsp 这个路径等下配置 vscode 的时候我们需要用到。
+> sourcekit-lsp 这个路径在后续配置 vscode 的时候我们需要用到。
 
 第二步，就是安装插件，很幸运，苹果给我们写好了文档，操作下来也没啥问题
 
