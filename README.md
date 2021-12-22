@@ -37,8 +37,8 @@
 
 # 项目模仿参考
 
-* 后台模板参考：[https://github.com/tailwindadmin/admin](https://github.com/tailwindadmin/admin)
-* 前端站点参考：[https://sharecuts.cn/shortcut/5681](https://sharecuts.cn/shortcut/5681)
+* [https://www.xiaoduyu.com/](https://www.xiaoduyu.com/) 
+* [源码](https://github.com/54sword/api.xiaoduyu.com)
 
 
 # 分支管理
