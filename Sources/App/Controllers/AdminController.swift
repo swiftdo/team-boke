@@ -24,18 +24,34 @@ struct AdminController: AuthableController {
             authGuard.get("users", use: adminUsers)
             authGuard.get("roles", use: adminRoles)
             authGuard.get("permissions", use: adminPermissions)
-            
             authGuard.get("articles", use: adminArticles)
             authGuard.get("cates", use: adminCates)
             authGuard.get("tags", use: adminTags)
-
             authGuard.get("logout", use: adminLogout)
+        }
+        
+        /// admin 必须登录
+        let authApiRoutes = routes
+            .grouped(UserAuthenticator())
+            .grouped(User.guardMiddleware())
+        
+        authApiRoutes.group("api", "admin") { admin in
+            admin.get("me", use: apiAdminMe)
         }
     }
 }
 
+/// api
 extension AdminController {
+    private func apiAdminMe(_ req: Request) async throws -> OutJson<OutUser> {
+        let user = try req.auth.require(User.self)
+        return OutJson(success: OutUser(from: user))
+    }
+}
 
+
+/// leaf
+extension AdminController {
     private func adminLogout(_ req: Request) async throws -> Response {
         // TODO:为啥退出会无效
         let _ = try req.auth.require(User.self)
@@ -88,7 +104,6 @@ extension AdminController {
         
         req.logger.info("\(context)")
         return try await req.view.render(path, context)
-                                         
     }
 
     private func dashboard(_ req: Request) async throws -> View {

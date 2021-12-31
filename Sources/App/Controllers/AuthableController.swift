@@ -8,6 +8,21 @@
 import Vapor
 import Fluent
 
+struct UserAuthenticator: AsyncBearerAuthenticator {
+    
+    typealias User = App.User
+    
+    func authenticate(bearer: BearerAuthorization, for request: Request) async throws {
+        let token = try await AccessToken.query(on: request.db).filter(\.$token == bearer.token).first()
+        if let token = token, token.isValid {
+            let user = try await token.$user.get(on: request.db)
+            request.auth.login(user)
+        }
+    }
+    
+}
+
+
 protocol AuthableController: RouteCollection {
     func getUserAuth(email: String, req: Request) async throws -> UserAuth?
     func removeAllTokensFor(userId: UUID, req: Request) async throws
