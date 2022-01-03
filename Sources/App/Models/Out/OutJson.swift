@@ -7,8 +7,6 @@
 
 import Vapor
 
-
-
 struct OutJson<T: Out>: Out, OutCodeMsg {
 
     var code: Int

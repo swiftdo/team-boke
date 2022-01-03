@@ -37,6 +37,8 @@ struct AdminController: AuthableController {
         
         authApiRoutes.group("api", "admin") { admin in
             admin.get("me", use: apiAdminMe)
+            admin.get("users", use: apiAdminGetUsers)
+            admin.post("user", use: apiAdminUserEdit)
         }
     }
 }
@@ -45,7 +47,27 @@ struct AdminController: AuthableController {
 extension AdminController {
     private func apiAdminMe(_ req: Request) async throws -> OutJson<OutUser> {
         let user = try req.auth.require(User.self)
-        return OutJson(success: OutUser(from: user))
+        let role = try await user.$role.query(on: req.db).first()
+        return OutJson(success: OutUser(from: user, role: role))
+    }
+    
+    // 获取用户列表
+    private func apiAdminGetUsers(_ req: Request) async throws -> OutJson<Page<OutUser>>{
+        let res: Page<User> = try await User.query(on: req.db)
+            .with(\.$role)
+            .sort(\.$createdAt, .descending)
+            .paginate(for: req)
+        
+        return OutJson(success: res.map({ OutUser(from: $0)}))
+    }
+    
+    // 用户修改
+    private func apiAdminUserEdit(_ req: Request) async throws -> OutJson<OutUser> {
+        try InEditUser.validate(content: req)
+        let inEditUser = try req.content.decode(InEditUser.self)
+        
+        
+        
     }
 }
 
@@ -99,7 +121,10 @@ extension AdminController {
         let path = req.myConfig.routePaths.adminUsers
         
         let users = try await User.query(on: req.db).paginate(PageRequest(page: page, per: per))
-        let outUsers = users.map(OutUser.init)
+        
+        let outUsers = users.map { u in
+            OutUser(from: u)
+        }
         let context = AdminPageContext(user: .init(from: user), path: path, page: page, per: per, result: outUsers)
         
         req.logger.info("\(context)")
