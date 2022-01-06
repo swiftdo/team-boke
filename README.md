@@ -4,7 +4,9 @@
 
 - [Vapor实战项目](#vapor%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE)
 - [项目模仿参考](#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E4%BB%BF%E5%8F%82%E8%80%83)
+- [项目规划](#%E9%A1%B9%E7%9B%AE%E8%A7%84%E5%88%92)
 - [分支管理](#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86)
+- [表设计](#%E8%A1%A8%E8%AE%BE%E8%AE%A1)
 - [自定义工作目录](#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95)
 - [路由](#%E8%B7%AF%E7%94%B1)
 - [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
@@ -56,6 +58,204 @@
 * dev 是开发分支
 
 main 的改动会触发项目的自动部署，无需人工改动
+
+
+# 表设计
+
+* users 用户
+    * id
+    * name
+    * email
+    * is_email_verified 邮箱是否验证
+    * avatar 头像
+    * role_id 角色id 
+    * created_at
+    * updated_at
+    * `last_sign_at`:Date 最近一次登录
+    * blocked:Bool 是否屏蔽用户 
+    * banned_to_post: Date  禁言，在该时间前不能发布言论
+    * gender: enum 性别 0女, 1男, 2 其他， 可以设计为枚举
+    * brief：String 简介,一句话介绍自己，70个字符限制
+    * source: 用户注册来源, 0->iPhone, 1->iPad, 2->Android, 3->H5, 4->网站, 5->iOS
+    * posts_count：int 帖子累积
+    * comment_count：int 评论累积
+    * fans_count: int 粉丝累积
+    * like_countL: int 获取赞累积
+    * follow_people_count: 用户关注人累积  - follow_peoples
+    * follow_posts_count: 关注的话题累积 -- follow_posts
+    * block_people_count: 屏蔽人的数量  -- block_peoples
+    * find_notification_at: Date 最近一次查询Notification的日期
+    
+
+* user_auths 用户认证账号 
+    * id
+    * user_id
+    * auth_type  类型 email, wxapp
+    * identifier 标志 (手机号，邮箱，用户名或第三方应用的唯一标识)
+    * credential 码凭证(站内的保存密码， 站外的不保存或保存 token)
+    * created_at
+    * updated_at
+
+* role 角色
+    * id 
+    * name
+    
+* roles_permissions 关系表
+    * id
+    * role_id 
+    * permission_id
+
+* permissions 权限
+    * id 
+    * name
+    
+* access_tokens 
+    * id 
+    * token
+    * user_id
+    * expires_at
+
+
+* notifications（通知）
+    * id 
+    * sender_id
+    * addressee_id
+    * target
+    * type
+    * deleted: bool
+    * created_at
+
+* user_notifications
+    * id 
+    * type https://github.com/54sword/api.xiaoduyu.com/blob/master/src/schemas/user-notification.ts
+    * send_id
+    * addressee_id
+    * posts_id
+    * comment_id
+    * has_read: Bool
+    * deleted: Bool
+    * created_at
+
+* message: 
+    * id 
+    * user_id
+    * addressee_id
+    * type 1. 普通消息 2系统消息
+    * content: 内容
+    * content_html 
+    * created_at 
+    * device
+    * ip
+    * has_read
+    * blocked 是否被屏蔽
+    * deleted: 是否删除
+
+
+* topics 话题
+    * id
+    * user_id
+    * parent_id 父
+    * name  名称
+    * brief 摘要
+    * desc 详情
+    * avator 节点图标
+    * background 背景图
+    * follow_count 关注总数
+    * post_count  提问累积
+    * comment_count 评论总数
+    * sort 排序
+    * created_at
+    * language: 语言
+    * recommend: 是否推荐
+    * last_posts_at: 最近发帖的日期
+    * children: 与子的关系
+
+* reports 举报
+    * id
+    * user_id
+    * post_id 
+    * comment_id
+    * people_id
+    * detail
+    * created_at
+    
+* posts 帖子
+    * id
+    * user_id
+    * topic_id
+    * type: 0 提问 1 分享
+    * title: 标题
+    * content: 内容
+    * content_html 内容转化后的html 格式
+    * created_at
+    * updated_at
+    * last_comment_at
+    * comment: 关系，评论
+    * comment_count: 评论数
+    * replay_count: 回复
+    * view_count: 浏览数
+    * follow_count: 关注
+    * like_count: 点赞数
+    * device: 设备
+    * ip 
+    * deleted_at
+    * verify: 是否是审核
+    * recommend: 是否推荐
+    * weaken: 削弱，将不再出现在首页
+
+* blocks 屏蔽
+    * user_id 
+    * post_id
+    * comment_id
+    * people_id
+    * deleted_at
+    * created_at
+    * ip
+
+* comments
+    * user_id 
+    * post_id
+    * parent_id
+    * reply_id
+    * content
+    * content_html
+    * created_at
+    * updated_at
+    * last_reply_at
+    * reply_count
+    * reply 
+    * like_count
+    * device
+    * ip
+    * blocked: bool
+    * deleted: bool
+    * verify: 内容校验是否成功
+    * weaken: 削弱
+    * recommend: 推荐
+
+* like
+    * user_id
+    * type
+    * target_id
+    * mood 0 赞 1 喜欢
+    * deleted: bool
+    * created_at
+
+* follow 
+    * user_id
+    * post_id
+    * topic_id
+    * people_id
+    * deleted
+    * created_at
+
+* feeds 动态流
+    * user_id
+    * topic_id
+    * post_id
+    * comment_id
+    * deleted
+    * created_at
 
 # 自定义工作目录
 
