@@ -27,7 +27,12 @@ final class User: Model {
     
     @Field(key: FieldKeys.avatar)
     var avatar: String?
-    
+
+    @Field(key: FieldKeys.lastSignAt)
+    var lastSignAt: Date? // 最近一次登录时间
+
+
+
     @Timestamp(key: FieldKeys.createdAt, on: .create)
     var createdAt: Date?
     
@@ -39,7 +44,7 @@ final class User: Model {
     
     @OptionalParent(key: FieldKeys.roleId)
     var role: Role?
-    
+
 
     init() { }
 
@@ -61,6 +66,14 @@ extension User {
         static var createdAt: FieldKey { "created_at" }
         static var updatedAt: FieldKey { "updated_at" }
         static var roleId: FieldKey { "role_id" }
+        static var lastSignAt: FieldKey { "last_sign_at" }
+        static var blocked: FieldKey { "blocked" }
+        static var bannedToPost: FieldKey { "banned_to_post" }
+        static var gender: FieldKey {"gender"}
+        static var brief: FieldKey {"brief"}
+        static var source: FieldKey { "source"}
+        static var postCount: FieldKey {"post_count"}
+        
     }
 }
 
