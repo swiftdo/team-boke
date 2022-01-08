@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Vapor
 
-class InEditUser : In {
+final class InEditUser : In {
     let id: String // 毕传用户id
     let name: String?
     let email: String?
@@ -16,7 +17,7 @@ class InEditUser : In {
 
 extension InEditUser: Validatable {
     static func validations(_ validations: inout Validations) {
-        validations.add("id", as: String.self, is: .nil)
+        validations.add("id", as: String.self, is: !.empty)
     }
 }
 

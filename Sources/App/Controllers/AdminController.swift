@@ -65,9 +65,22 @@ extension AdminController {
     private func apiAdminUserEdit(_ req: Request) async throws -> OutJson<OutUser> {
         try InEditUser.validate(content: req)
         let inEditUser = try req.content.decode(InEditUser.self)
-        
-        
-        
+        let user = try await User.find(UUID.init(uuidString: inEditUser.id), on: req.db)
+        guard let user = user else {
+            throw ApiError(code: OutStatus.userNotExist)
+        }
+        if let email = inEditUser.email {
+            user.email = email
+        }
+        if let name = inEditUser.name {
+            user.name = name
+        }
+
+        if let roleId = inEditUser.roleId {
+            user.$role.id = .init(uuidString: roleId)
+        }
+        try await user.update(on: req.db)
+        return OutJson(success: OutUser(from: user))
     }
 }
 
